@@ -1,0 +1,5 @@
+The Repository:
+The repository represents an Eclipse project.
+
+The project:
+The project is an implementation of Siemens MR data as an ImageJ object. The importer is based on the source code from the Interfile_TP Image-J plug-in.
