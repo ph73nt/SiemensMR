@@ -3,3 +3,15 @@ The repository represents an Eclipse project.
 
 The project:
 The project is an implementation of Siemens MR data as an ImageJ object. The importer is based on the source code from the Interfile_TP Image-J plug-in.
+
+Requirements:
+The ImageJ source tree should be at the same tree level as the project folder for THIS project and it must be called ImageJ. Alternatively edit the build.xml file.
+
+-~
+--workspace
+---ImageJ
+----ij
+----plugins
+----etc..
+---SiemensMR
+----src
