@@ -3,6 +3,7 @@ package rda;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.io.OpenDialog;
+import ij.plugin.PlugIn;
 
 /**
  * This ImageJ plugin, which was modified from Interfile_TP (available from the
@@ -15,7 +16,7 @@ import ij.io.OpenDialog;
  * @author Neil Thomson
  * 
  */
-public class RDA extends ImagePlus {
+public class RDA extends ImagePlus implements PlugIn {
 
 	public static final String HDR_START = ">>> Begin of header <<<";
 	public static final String HDR_END = ">>> End of header <<<";
