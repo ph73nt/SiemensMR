@@ -1,9 +1,28 @@
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+
 import rda.RDA;
 import rda.RDAOpener;
 import ij.IJ;
+import ij.ImagePlus;
+import ij.io.FileInfo;
 import ij.io.OpenDialog;
 
-public class Import_Siemens_RDA implements ij.plugin.PlugIn {
+public class Import_Siemens_RDA extends ImagePlus implements ij.plugin.PlugIn {
+	
+	  private BufferedInputStream inputStream;
+
+	  public Import_Siemens_RDA() {
+	  }
+
+	  public Import_Siemens_RDA(InputStream is) {
+	    this(new BufferedInputStream(is));
+	  }
+
+	  /** Constructs a DICOM reader that using an BufferredInputStream. */
+	  public Import_Siemens_RDA(BufferedInputStream bis) {
+	    inputStream = bis;
+	  }
 	
 	public void run(String arg) {
 
@@ -13,7 +32,6 @@ public class Import_Siemens_RDA implements ij.plugin.PlugIn {
 		}
 
 		RDAOpener rdao = new RDAOpener();
-		if(arg.toLowerCase().indexOf(RDA.HDR_START) >= 0) {
 			OpenDialog od = new OpenDialog("Open an RDA file...", "");
 			String directory = od.getDirectory();
 			String name = od.getFileName();
@@ -21,13 +39,9 @@ public class Import_Siemens_RDA implements ij.plugin.PlugIn {
 				return;
 			String path = directory + name;
 			IJ.showStatus("Opening: " + path);
-			rdao.openRDA(directory, name).show();
-		} else
-		{
-			// Just call the normal IJ open routine
-			rdao.open();
-		}
-		
+			FileInfo fi = null;
+			
+			rdao.openRDA(directory, name).show();		
 	}
 
 	public void showAbout() {		
