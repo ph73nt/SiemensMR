@@ -16,13 +16,13 @@
 	</echo>
 	</target>
 	<target name="compress" depends="" description="generate the distribution">
-		<jar jarfile="${jar}.jar">
+		<jar jarfile="${dist}/${jar}.jar">
 			<fileset dir="." includes="plugins.config" />
 			<fileset dir="${build}" includes="**/*.*" />
 			<manifest>
 				<attribute name="Built-By" value="${user.name}"/>
 			</manifest>
 		</jar>
-		<copy file="${jar}.jar" toDir="${pluginsDir}" />
+		<copy file="${dist}/${jar}.jar" toDir="${pluginsDir}" />
 	</target>
 </project>
