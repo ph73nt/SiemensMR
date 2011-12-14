@@ -20,6 +20,8 @@ public class RDADecoder {
 	private int imageOffset;
 
 	public String header;
+	public final static String headerBegin = ">>> Begin of header <<<";
+	public final static String headerEnd = ">>> End of header <<<";
 	
 	public ImagePlus imp;
 	
@@ -60,7 +62,7 @@ public class RDADecoder {
 	    	return fi;
 	    }
 	    
-	    
+	    imp.setProperty("Info", header);
 
 	    // Set some default values for testing
 //	    fi.width = xdim;
@@ -78,11 +80,26 @@ public class RDADecoder {
 
 	public boolean isRDA() throws IOException {
 		// Files begin with >>> Begin of header <<<
-		byte[] text = new byte[23];
-		f.read(text, 0, 23);
-		header = text.toString(); 
-		if (header.equalsIgnoreCase(">>> Begin of header <<<"))
-			return true;
+		int location = headerBegin.length();
+		byte[] text = new byte[location];
+		f.read(text, 0, location);
+		header = new String(text); 		
+		if (!header.equalsIgnoreCase(headerBegin))
+			return false;
+		
+		// and ends with ">>> End of header <<<"
+		text = new byte[1];
+		f.read(text, 0, 1);
+
+		while ((text[0] != 3) && (text[0] != 4)) {
+			header += new String(text);
+			String end = header.substring(header.length() - headerEnd.length());
+			if (end.equalsIgnoreCase(headerEnd)){
+				return true;
+			}
+			f.read(text, 0, 1);
+		}
+		
 		return false;
 	}
 
